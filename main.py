@@ -32,11 +32,10 @@ def creatMaze(dim, fp):
     return np.array(maze)
 
 def showMaze(maze):
-    fig, ax = plt.subplots()
+    # fig, ax = plt.subplots()
+    # ax.matshow(maze, cmap=plt.cm.Blues)
 
-    ax.matshow(maze, cmap=plt.cm.Blues)
-
-    # plt.imshow(maze, interpolation='none')
+    plt.imshow(maze, interpolation='none')
     plt.colorbar()
     plt.show()  
 
@@ -48,5 +47,4 @@ def main():
     showMaze(maze)
                    
 
-    
 main()
