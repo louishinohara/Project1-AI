@@ -4,6 +4,8 @@ import matplotlib.pyplot as plt
 from matplotlib import colors
 import numpy as np
 
+#yo pierre you wanna come out here
+
 #Returns true false based on probability blocked, true false indicating whether cell should be blocked or free
 def blocked(fp):
 
