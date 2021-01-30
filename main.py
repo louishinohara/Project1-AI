@@ -34,17 +34,6 @@ def createMaze(dim, fp):
     return np.array(maze)
 
 def showMaze(maze, dim):
-    # vv Louis's old visualization vv
-
-    # fig, ax = plt.subplots()
-    # ax.matshow(maze, cmap=plt.cm.Blues)
-
-    # plt.imshow(maze, interpolation='none')
-    # plt.colorbar()
-    # ax = plt.gca()
-    # ax.grid(which = 'minor', color='w', linestyle='-', linewidth=5) #gridlines
-    # plt.show() 
-
     ## grid from array: https://stackoverflow.com/questions/43971138/python-plotting-colored-grid-based-on-values
     
     # create discrete colormap 
