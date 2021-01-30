@@ -57,11 +57,24 @@ def showMaze(maze, dim):
 
     plt.show()
 
+
+def DFS(maze):
+    stack = []
+    stack.append('a')
+    stack.append('b')
+    stack.append('c')
+
+    print(stack.pop())
+    print(stack.pop())
+    print(stack.pop())
+
+
 def main():
     dimensions = 10
     probabilityOfBlock = 0.3
     maze = createMaze(dimensions,probabilityOfBlock)
     print(maze)
+    DFS(maze)
     showMaze(maze, dimensions)
                    
 
