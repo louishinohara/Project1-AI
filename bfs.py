@@ -4,6 +4,17 @@ from queue import Queue
 # BFS: takes in a start node and the dimensions (for the goal),
 # outputs result node w/ path accessible via result.prev
 
+def initBFS(maze,dimensions):
+    bfsResult = BFS(maze, Node(0,0), dimensions)
+    if (bfsResult is not None):
+        print("--BFS Goal Path--")
+    while(bfsResult is not None):
+        print('(' + str(bfsResult.x) + ', ' + str(bfsResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
+        bfsResult = bfsResult.prev
+    else:
+      print("BFS found no solution")
+    return True
+
 def BFS(maze, startNode, dim):
     fringe = Queue()
     fringe.put(startNode)
@@ -47,3 +58,11 @@ def BFS(maze, startNode, dim):
 
     # Else: Goal Node not found, fringe empty
     return None
+
+
+
+
+
+
+
+      
