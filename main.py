@@ -1,11 +1,13 @@
 import os
-
+import matplotlib.pyplot as plt
 import time
 from dfs import DFS
+from dfs import initDFS
 from bfs import initBFS
 from node import Node
 from maze import createMaze, showMaze
 from customTimer import customTimer
+
 
 
 def main():
@@ -16,14 +18,14 @@ def main():
     # DFS(maze)
     start = time.time()
     complete = False
-    complete = initBFS(maze,dimensions)
+    complete = initDFS(maze,dimensions)
     end = time.time()
     print('The elapsed time is: ' + str(round( end - start)) + ' seconds.' )    
  
 
 
     
-    showMaze(maze, dimensions)
+    #showMaze(maze, dimensions)
     
                    
 
