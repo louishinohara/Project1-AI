@@ -6,27 +6,44 @@ from bfs import initBFS
 import matplotlib.pyplot as plt
 from maze import createMaze, showMaze, updateMaze
 from customTimer import customTimer
-from firespread import spreadFire
+from firespread import igniteFire, spreadFire
 
 def main():
-    DIMENSIONS = 300
-    PROBABILITY_OF_BLOCK = 0.2
+    DIMENSIONS = 10
+    PROBABILITY_OF_BLOCK = 0.3
+    MAZE = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK) # Create the maze
 
-    testMaze = []    #testing out the fire spreading
-    maze = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK) # Create the maze
+    # firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
+    secondSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
 
+
+
+
+
+
+def firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK):
     # List of functions to store in array and execute in for loop on next line
     # Store as function to call with param as our maze and the dimensions of the maze
-    funcList = [initDFS(maze, DIMENSIONS), initBFS(maze, DIMENSIONS)]   #DFS Maze Function, BFS Maze Function
+    funcList = [initDFS(MAZE, DIMENSIONS), initBFS(MAZE, DIMENSIONS)]   #DFS Maze Function, BFS Maze Function
 
     for func in funcList:
-        completedMaze, foundPath = updateMaze(maze, func, DIMENSIONS)
+        completedMaze, foundPath = updateMaze(MAZE, func, DIMENSIONS)   # Returns Completed Maze and if path is found
         if foundPath:
             showMaze(completedMaze, DIMENSIONS)
         else:
             break
-main()
 
+
+def secondSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
+    fireMaze = igniteFire(MAZE, DIMENSIONS)
+    
+
+    for i in range(10):
+        testMaze = spreadFire(fireMaze, DIMENSIONS, PROBABILITY_OF_BLOCK)
+        fireMaze = testMaze.copy()
+        showMaze(fireMaze, DIMENSIONS)
+
+main()
 
 """    for x in range(10):
         col = []

@@ -35,8 +35,8 @@ def showMaze(maze, dim):
     ## grid from array: https://stackoverflow.com/questions/43971138/python-plotting-colored-grid-based-on-values
     
     # create discrete colormap 
-    cmap = colors.ListedColormap(['green', 'white', 'black', 'red'])
-    bounds = [0,1.9,2.9, 3.9, 4.9]   #[green = 0, green=1, white=2, black=3, red=4]
+    cmap = colors.ListedColormap(['green', 'white', 'black', 'blue','red'])
+    bounds = [0,1.9,2.9, 3.9, 4.9, 5.9]   #[green = 0, green=1, white=2, black=3, blue=4, red=5] [start, goal, open, blocked, path, fire]
     norm = colors.BoundaryNorm(bounds, cmap.N)
 
     fig, ax = plt.subplots()
@@ -54,15 +54,15 @@ def showMaze(maze, dim):
     plt.show()
 
 
-def updateMaze(maze, coordinates, dimensions):  # Updates the maze to see the path
-    completedMaze = maze.copy()                 # Create deep copy
+def updateMaze(maze, coordinates, dimensions):      # Updates the maze to see the path
+    completedMaze = maze.copy()                     # Create deep copy
 
-    while coordinates is not None:              # Iteratively place 4 where nodes used to be
+    while coordinates is not None:                  # Iteratively place 4 where nodes used to be
         completedMaze[coordinates.x][coordinates.y] = 4
         coordinates = coordinates.prev
-        if coordinates.x + coordinates.y == 0:
+        if coordinates.x + coordinates.y == 0:      # If we are at the start node, break
             break
-    completedMaze[dimensions-1][dimensions-1] = 1
+    completedMaze[dimensions-1][dimensions-1] = 1    #Convert goal node back to 1
     return completedMaze, coordinates != None   # Returns the completed maze or if there is no path, return false
 
 
