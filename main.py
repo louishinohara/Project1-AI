@@ -8,12 +8,6 @@ from maze import createMaze, showMaze, updateMaze
 from customTimer import customTimer
 from firespread import spreadFire
 
-
-def findPath(func, maze, DIMENSIONS):     # Params are the function, the unaltered maze, dimensions of maze  
-    coordinates = func
-    return updateMaze(maze, coordinates, DIMENSIONS)    # Returns the altered maze after calling function
-
-
 def main():
     DIMENSIONS = 300
     PROBABILITY_OF_BLOCK = 0.2
@@ -26,7 +20,7 @@ def main():
     funcList = [initDFS(maze, DIMENSIONS), initBFS(maze, DIMENSIONS)]   #DFS Maze Function, BFS Maze Function
 
     for func in funcList:
-        completedMaze, foundPath = findPath(func, maze, DIMENSIONS) 
+        completedMaze, foundPath = updateMaze(maze, func, DIMENSIONS)
         if foundPath:
             showMaze(completedMaze, DIMENSIONS)
         else:
