@@ -1,3 +1,4 @@
+import time
 from node import Node
 from queue import Queue
 
@@ -5,7 +6,10 @@ from queue import Queue
 # outputs result node w/ path accessible via result.prev
 
 def initBFS(maze,dimensions):
+    start_time = time.time() 
     bfsResult = BFS(maze, Node(0,0), dimensions)
+    print("--- %s seconds ---" % (time.time() - start_time))
+
     if (bfsResult is not None):
         print("--BFS Goal Path--")
         bfsResultsCopy = bfsResult

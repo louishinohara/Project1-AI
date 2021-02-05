@@ -1,11 +1,15 @@
+import time
 from node import Node
 from queue import Queue
+
 
 # DFS: takes in a start node and the dimensions (for the goal),
 # outputs result node w/ path accessible via result.prev
 
 def initDFS(maze,dimensions):
+    start_time = time.time() 
     dfsResult = DFS(maze, Node(0,0), dimensions)
+    print("--- %s seconds ---" % (time.time() - start_time))
     if (dfsResult is not None):
         print("--DFS Goal Path--")
         dfsResultsCopy = dfsResult

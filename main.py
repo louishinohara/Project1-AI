@@ -1,5 +1,4 @@
 import os
-import time
 from dfs import DFS
 from node import Node
 from dfs import initDFS
@@ -10,17 +9,14 @@ from customTimer import customTimer
 from firespread import spreadFire
 
 
-def findPath(func, maze, DIMENSIONS):     # Params are the function, the unaltered maze, dimensions of maze
-    start = time.time() 
+def findPath(func, maze, DIMENSIONS):     # Params are the function, the unaltered maze, dimensions of maze  
     coordinates = func
-    end = time.time()
-    print('The elapsed time is: ' + str(end - start) + ' seconds.' )
     return updateMaze(maze, coordinates, DIMENSIONS)    # Returns the altered maze after calling function
 
 
 def main():
-    DIMENSIONS = 500
-    PROBABILITY_OF_BLOCK = 0.3
+    DIMENSIONS = 300
+    PROBABILITY_OF_BLOCK = 0.2
 
     testMaze = []    #testing out the fire spreading
     maze = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK) # Create the maze
