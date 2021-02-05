@@ -1,23 +1,26 @@
+import time
 from node import Node
 from queue import Queue
 
-# DFS: takes in a start node and the dimensions (for the goal),
-# outputs result node w/ path accessible via result.prev
+def initBFS(maze,dimensions):
+    start_time = time.time() 
+    bfsResult = BFS(maze, Node(0,0), dimensions)
+    print("--- %s seconds ---" % (time.time() - start_time))
 
-def initDFS(maze,dimensions):
-    dfsResult = DFS(maze, Node(0,0), dimensions)
-    if (dfsResult is not None):
-        print("--DFS Goal Path--")
-        while(dfsResult is not None):
-            print('(' + str(dfsResult.x) + ', ' + str(dfsResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
-            dfsResult = dfsResult.prev
+    if (bfsResult is not None):
+        print("--BFS Goal Path--")
+        bfsResultsCopy = bfsResult
+        # while(bfsResult is not None):
+        #     print('(' + str(bfsResult.x) + ', ' + str(bfsResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
+        #     bfsResult = bfsResult.prev
+        return bfsResultsCopy
     else:
-      print("DFS found no solution")
-    return True
+      print("BFS found no solution")
+    return None
 
-def DFS(maze, startNode, dim):
-    fringe = []
-    fringe.append(startNode)
+def BFS(maze, startNode, dim):
+    fringe = Queue()
+    fringe.put(startNode)
     visitedCoords = set()
 
     # These arrays are used to get row and column
@@ -26,8 +29,8 @@ def DFS(maze, startNode, dim):
     leftRight = [1, 0, 0, -1]
     upDown = [0, 1, -1, 0]
 
-    while(len(fringe) != 0):
-        curr = fringe.pop()
+    while(not fringe.empty()):
+        curr = fringe.get()
 
         if(curr.x == (dim-1) and curr.y == (dim-1)):  # Goal Node Found
             return curr
@@ -36,11 +39,11 @@ def DFS(maze, startNode, dim):
 
             # # Printing Path (debugging)
             # print("Processing coords: " + str(curr.x) + " " + str(curr.y))
-            # dfsResult = curr
+            # bfsResult = curr
             # print('Processing Path: ', end='')
-            # while(dfsResult is not None):
-            #   print('(' + str(dfsResult.x) + ', ' + str(dfsResult.y) + ') <- ', end='')
-            #   dfsResult = dfsResult.prev
+            # while(bfsResult is not None):
+            #   print('(' + str(bfsResult.x) + ', ' + str(bfsResult.y) + ') <- ', end='')
+            #   bfsResult = bfsResult.prev
             # print()
 
             
@@ -52,7 +55,7 @@ def DFS(maze, startNode, dim):
                 if (0 <= row < dim and 0 <= col < dim            # in matrix
                         and (maze[row][col] in (1, 2))           # status = open/goal
                         and ((row, col) not in visitedCoords)):  # not visited
-                    fringe.append(Node(row, col, curr))
+                    fringe.put(Node(row, col, curr))
 
             visitedCoords.add((curr.x, curr.y))                  # mark current node as visited
 

@@ -1,23 +1,45 @@
 import os
+from node import Node, aStarNode
+from dfs.dfs import initDFS 
+from bfs.bfs import initBFS
 import matplotlib.pyplot as plt
-import time
-from dfs import DFS
-from dfs import initDFS
-from bfs import initBFS
-from aStar import initAStar
-from node import Node
-from maze import createMaze, showMaze
+from maze import createMaze, showMaze, updateMaze
 from customTimer import customTimer
-from firespread import spreadFire
-
+from firespread import igniteFire, spreadFire
 
 def main():
+    DIMENSIONS = 10
+    PROBABILITY_OF_BLOCK = 0.3
+    MAZE = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK) # Create the maze
+
+    # firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
+    secondSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
+
+def firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK):
+    # List of functions to store in array and execute in for loop on next line
+    # Store as function to call with param as our maze and the dimensions of the maze
+    funcList = [initDFS(MAZE, DIMENSIONS), initBFS(MAZE, DIMENSIONS)]   #DFS Maze Function, BFS Maze Function
+
+    for func in funcList:
+        completedMaze, foundPath = updateMaze(MAZE, func, DIMENSIONS)   # Returns Completed Maze and if path is found
+        if foundPath:
+            showMaze(completedMaze, DIMENSIONS)
+        else:
+            break
 
 
-    #testing out the fire spreading
-    """testMaze =[]
+def secondSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
+    fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
+    showMaze(fireMaze, DIMENSIONS)
 
-    for x in range(10):
+    for i in range(10):                                                 # Spreads fire. Need to modify path finding alg code to do certain things
+        testMaze = spreadFire(fireMaze, DIMENSIONS, PROBABILITY_OF_BLOCK)
+        fireMaze = testMaze.copy()
+        showMaze(fireMaze, DIMENSIONS)
+
+main()
+
+"""    for x in range(10):
         col = []
         for y in range(10):
             col.append(2)
@@ -32,23 +54,3 @@ def main():
         for y in range(10):
             print(testMaze[y])
         print("---------") """
-
-
-
-
-
-    dimensions = 1000
-    probabilityOfBlock = 0.3
-    maze = createMaze(dimensions,probabilityOfBlock)
-    print(maze)
-    start = time.time()
-    complete = False
-    complete = initAStar(maze,dimensions)
-    end = time.time()
-    print('The elapsed time is: ' + str(round( end - start)) + ' seconds.' )     
-    
-    # showMaze(maze, dimensions)
-    
-                   
-
-main()
