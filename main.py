@@ -1,4 +1,5 @@
 import os
+from node import Node, aStarNode
 from dfs.dfs import initDFS 
 from dfsS1 import initDFSS1 # DFS for Strategy 1
 from bfs.bfs import initBFS

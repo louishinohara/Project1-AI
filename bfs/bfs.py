@@ -2,9 +2,6 @@ import time
 from node import Node
 from queue import Queue
 
-# BFS: takes in a start node and the dimensions (for the goal),
-# outputs result node w/ path accessible via result.prev
-
 def initBFS(maze,dimensions):
     start_time = time.time() 
     bfsResult = BFS(maze, Node(0,0), dimensions)
@@ -64,11 +61,3 @@ def BFS(maze, startNode, dim):
 
     # Else: Goal Node not found, fringe empty
     return None
-
-
-
-
-
-
-
-      
