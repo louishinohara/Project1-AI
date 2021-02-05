@@ -1,6 +1,6 @@
 import os
-from node import Node
 from dfs.dfs import initDFS 
+from dfsS1 import initDFSS1 # DFS for Strategy 1
 from bfs.bfs import initBFS
 import matplotlib.pyplot as plt
 from maze import createMaze, showMaze, updateMaze
@@ -13,7 +13,7 @@ def main():
     MAZE = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK) # Create the maze
 
     # firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
-    secondSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
+    secondSection(MAZE, DIMENSIONS)
 
 def firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK):
     # List of functions to store in array and execute in for loop on next line
@@ -28,16 +28,36 @@ def firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK):
             break
 
 
-def secondSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
+def secondSection(MAZE, DIMENSIONS):
     fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
     showMaze(fireMaze, DIMENSIONS)
+    PROBABILITY_OF_FIRE_SPREAD = 0.3
 
-    for i in range(10):                                                 # Spreads fire. Need to modify path finding alg code to do certain things
-        testMaze = spreadFire(fireMaze, DIMENSIONS, PROBABILITY_OF_BLOCK)
-        fireMaze = testMaze.copy()
-        showMaze(fireMaze, DIMENSIONS)
+    # initDFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+
+
 
 main()
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 """    for x in range(10):
         col = []
