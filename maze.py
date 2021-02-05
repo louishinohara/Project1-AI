@@ -54,7 +54,16 @@ def showMaze(maze, dim):
     plt.show()
 
 
+def updateMaze(maze, coordinates, dimensions):  # Updates the maze to see the path
+    completedMaze = maze.copy()                 # Create deep copy
 
+    while coordinates is not None:              # Iteratively place 4 where nodes used to be
+        completedMaze[coordinates.x][coordinates.y] = 4
+        coordinates = coordinates.prev
+        if coordinates.x + coordinates.y == 0:
+            break
+    completedMaze[dimensions-1][dimensions-1] = 1
+    return completedMaze, coordinates != None   # Returns the completed maze or if there is no path, return false
 
 
 

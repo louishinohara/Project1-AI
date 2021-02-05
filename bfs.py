@@ -8,12 +8,14 @@ def initBFS(maze,dimensions):
     bfsResult = BFS(maze, Node(0,0), dimensions)
     if (bfsResult is not None):
         print("--BFS Goal Path--")
-    while(bfsResult is not None):
-        print('(' + str(bfsResult.x) + ', ' + str(bfsResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
-        bfsResult = bfsResult.prev
+        bfsResultsCopy = bfsResult
+        # while(bfsResult is not None):
+        #     print('(' + str(bfsResult.x) + ', ' + str(bfsResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
+        #     bfsResult = bfsResult.prev
+        return bfsResultsCopy
     else:
       print("BFS found no solution")
-    return True
+    return None
 
 def BFS(maze, startNode, dim):
     fringe = Queue()

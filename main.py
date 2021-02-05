@@ -1,20 +1,42 @@
 import os
-import matplotlib.pyplot as plt
 import time
 from dfs import DFS
+from node import Node
 from dfs import initDFS
 from bfs import initBFS
-from node import Node
-from maze import createMaze, showMaze
+import matplotlib.pyplot as plt
+from maze import createMaze, showMaze, updateMaze
 from customTimer import customTimer
 from firespread import spreadFire
 
 
+def findPath(func, maze, DIMENSIONS):     # Params are the function, the unaltered maze, dimensions of maze
+    start = time.time() 
+    coordinates = func
+    end = time.time()
+    print('The elapsed time is: ' + str(end - start) + ' seconds.' )
+    return updateMaze(maze, coordinates, DIMENSIONS)    # Returns the altered maze after calling function
+
+
 def main():
+    DIMENSIONS = 500
+    PROBABILITY_OF_BLOCK = 0.3
 
+    testMaze = []    #testing out the fire spreading
+    maze = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK) # Create the maze
 
-    #testing out the fire spreading
-    testMaze =[]
+    # List of functions to store in array and execute in for loop on next line
+    # Store as function to call with param as our maze and the dimensions of the maze
+    funcList = [initDFS(maze, DIMENSIONS), initBFS(maze, DIMENSIONS)]   #DFS Maze Function, BFS Maze Function
+
+    for func in funcList:
+        completedMaze, foundPath = findPath(func, maze, DIMENSIONS) 
+        if foundPath:
+            showMaze(completedMaze, DIMENSIONS)
+        else:
+            break
+main()
+
 
 """    for x in range(10):
         col = []
@@ -31,26 +53,3 @@ def main():
         for y in range(10):
             print(testMaze[y])
         print("---------") """
-
-
-
-
-
-     dimensions = 1000
-    probabilityOfBlock = 0.3
-    maze = createMaze(dimensions,probabilityOfBlock)
-    print(maze)
-    start = time.time()
-    complete = False
-    complete = initDFS(maze,dimensions)
-    end = time.time()
-    print('The elapsed time is: ' + str(round( end - start)) + ' seconds.' )     
- 
-
-
-    
-    #showMaze(maze, dimensions)
-    
-                   
-
-main()
