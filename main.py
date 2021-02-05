@@ -1,5 +1,5 @@
 import os
-from node import Node
+from node import Node, aStarNode
 from dfs.dfs import initDFS 
 from bfs.bfs import initBFS
 import matplotlib.pyplot as plt
