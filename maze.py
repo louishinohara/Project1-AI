@@ -52,10 +52,3 @@ def showMaze(maze, dim):
     ax.set_yticklabels(np.arange(0, dim+1, 1))
 
     plt.show()
-
-
-
-
-
-
-

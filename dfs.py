@@ -58,11 +58,3 @@ def DFS(maze, startNode, dim):
 
     # Else: Goal Node not found, fringe empty
     return None
-
-
-
-
-
-
-
-      

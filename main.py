@@ -4,6 +4,7 @@ import time
 from dfs import DFS
 from dfs import initDFS
 from bfs import initBFS
+from aStar import initAStar
 from node import Node
 from maze import createMaze, showMaze
 from customTimer import customTimer
@@ -14,9 +15,9 @@ def main():
 
 
     #testing out the fire spreading
-    testMaze =[]
+    """testMaze =[]
 
-"""    for x in range(10):
+    for x in range(10):
         col = []
         for y in range(10):
             col.append(2)
@@ -36,20 +37,17 @@ def main():
 
 
 
-     dimensions = 1000
+    dimensions = 1000
     probabilityOfBlock = 0.3
     maze = createMaze(dimensions,probabilityOfBlock)
     print(maze)
     start = time.time()
     complete = False
-    complete = initDFS(maze,dimensions)
+    complete = initAStar(maze,dimensions)
     end = time.time()
     print('The elapsed time is: ' + str(round( end - start)) + ' seconds.' )     
- 
-
-
     
-    #showMaze(maze, dimensions)
+    # showMaze(maze, dimensions)
     
                    
 

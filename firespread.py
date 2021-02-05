@@ -25,9 +25,3 @@ def spreadFire(maze, dimensions, q):
                 if (random.random() <= prob):
                     mazeCopy[x][y] = 4
     return mazeCopy 
-
-
-
-
-                    
-
