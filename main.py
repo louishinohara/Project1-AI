@@ -1,8 +1,7 @@
 import os
-from dfs import DFS
 from node import Node
-from dfs import initDFS
-from bfs import initBFS
+from dfs.dfs import initDFS 
+from bfs.bfs import initBFS
 import matplotlib.pyplot as plt
 from maze import createMaze, showMaze, updateMaze
 from customTimer import customTimer
@@ -15,11 +14,6 @@ def main():
 
     # firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
     secondSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
-
-
-
-
-
 
 def firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK):
     # List of functions to store in array and execute in for loop on next line
@@ -35,10 +29,10 @@ def firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK):
 
 
 def secondSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
-    fireMaze = igniteFire(MAZE, DIMENSIONS)
-    
+    fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
+    showMaze(fireMaze, DIMENSIONS)
 
-    for i in range(10):
+    for i in range(10):                                                 # Spreads fire. Need to modify path finding alg code to do certain things
         testMaze = spreadFire(fireMaze, DIMENSIONS, PROBABILITY_OF_BLOCK)
         fireMaze = testMaze.copy()
         showMaze(fireMaze, DIMENSIONS)

@@ -3,20 +3,19 @@ from node import Node
 from queue import Queue
 
 def igniteFire(MAZE, DIMENSIONS):
-    initFireMaze = MAZE.copy()
-    ignited = False
-    FREE_SPACE = 2
-    FIRE = 5
+    initFireMaze = MAZE.copy()                              # Create Copy
+    ignited = False                                         # Bool when valid spot is found
+    FREE_SPACE = 2                                          # Constants
+    FIRE_SPACE = 5
     
     while not ignited:
-        xCoord = random.randrange(1, DIMENSIONS - 2 )
+        xCoord = random.randrange(1, DIMENSIONS - 2 )       # Find a random x and y coord
         yCoord = random.randrange(1, DIMENSIONS - 2 )
-        print(xCoord,yCoord)
-        if (initFireMaze[xCoord][yCoord] == FREE_SPACE):
-            initFireMaze[xCoord][yCoord] = 5
+        if (initFireMaze[xCoord][yCoord] == FREE_SPACE):    # Check if that space is free and ignite fire
+            initFireMaze[xCoord][yCoord] = FIRE_SPACE
             ignited = True
 
-    return initFireMaze
+    return initFireMaze                                     # Return maze with ignited fire 
 
 
 
