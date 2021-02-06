@@ -1,14 +1,15 @@
 import os
-from node import Node, aStarNode
-from dfs import initDFS
-# from dfsS1 import initDFSS1  # DFS for Strategy 1
-from bfsS1 import initBFSS1  # BFS for Strategy 1
-from bfs import initBFS
 import matplotlib.pyplot as plt
+
 from maze import createMaze, showMaze, updateMaze
 from customTimer import customTimer
 from firespread import igniteFire, spreadFire
+from node import Node, aStarNode
 
+from dfs import initDFS
+from bfs import initBFS
+from bfsS1 import initBFSS1  # BFS for Strategy 1
+from bfsS2 import initBFSS2  # BFS for Strategy 2
 
 def main():
     DIMENSIONS = 10
@@ -35,22 +36,51 @@ def firstSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
 
 
 def secondSection(MAZE, DIMENSIONS):
-    fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
-    showMaze(fireMaze, DIMENSIONS)
+    # fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
+    # showMaze(fireMaze, DIMENSIONS)
     PROBABILITY_OF_FIRE_SPREAD = 0.3
-    # fireMaze = [[0, 2, 2, 3, 2, 2, 2, 3, 2, 2,],   # For consistent testing
-    #             [2, 2, 3, 2, 2, 3, 2, 3, 2, 3],
-    #             [2, 2, 2, 2, 2, 3, 2, 2, 2, 2],
-    #             [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
-    #             [2, 2, 3, 2, 2, 2, 2, 2, 2, 2],
-    #             [2, 2, 3, 2, 2, 3, 5, 2, 2, 2],
-    #             [3, 3, 2, 3, 2, 3, 3, 2, 3, 3],
-    #             [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
-    #             [2, 3, 2, 2, 3, 2, 3, 3, 2, 3],
-    #             [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
-    initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+    fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],   # For consistent testing
+                [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
+                [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
+                [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
+                [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+                [2, 2, 3, 2, 2, 3, 2, 2, 2, 2],
+                [3, 3, 2, 3, 2, 3, 3, 2, 3, 2],
+                [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
+                [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
+                [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
+    # initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+    initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
 
 main()
+
+# Sample maze where agent gauranteed death
+# fireMaze = [[0, 2, 2, 3, 2, 2, 2, 3, 2, 2,],   
+#             [2, 2, 2, 2, 2, 3, 2, 3, 2, 3],
+#             [2, 2, 2, 2, 2, 3, 2, 2, 2, 2],
+#             [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
+#             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+#             [2, 2, 3, 2, 2, 3, 5, 2, 2, 2],
+#             [3, 3, 2, 3, 2, 3, 3, 2, 3, 3],
+#             [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
+#             [2, 3, 2, 2, 3, 2, 3, 3, 2, 3],
+#             [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
+
+# This matrix for BFSS2 shows that the agent will pick an alternate path
+# Without the 5 in [1,7], the agent will travel along the edge of the matrix
+# However once the fire blocks the path, the agent will choose an alternate path to adapt
+# fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],   # For consistent testing
+#             [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
+#             [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
+#             [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
+#             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+#             [2, 2, 3, 2, 2, 3, 2, 2, 2, 2],
+#             [3, 3, 2, 3, 2, 3, 3, 2, 3, 2],
+#             [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
+#             [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
+#             [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
+
+
 
 
 """    for x in range(10):
