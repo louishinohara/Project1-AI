@@ -54,7 +54,7 @@ def BFS(maze, startNode, dim):
 
                 # Add valid child to fringe
                 if (0 <= row < dim and 0 <= col < dim            # in matrix
-                        and (maze[row][col] in (1, 2))           # status = open/goal
+                        and (maze[row][col] in (1, 2, 4 ))           # status = open/goal
                         and ((row, col) not in visitedCoords)):  # not visited
                     fringe.put(Node(row, col, curr))
 

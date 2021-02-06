@@ -50,6 +50,5 @@ def spreadFire(maze, dimensions, q):    # Params are the maze (and updated fire 
 
                 if (random.random() <= prob):               # Execute probability
                     mazeCopy[x][y] = FIRE_SPACE
-                    fire_coordinate.append([x,y])
-                    
+                    fire_coordinate.append([x,y]) 
     return mazeCopy, fire_coordinate 

@@ -1,5 +1,6 @@
 import time
 import copy
+from bfs import BFS
 from node import Node
 from queue import Queue
 from maze import showMaze
@@ -8,14 +9,13 @@ from firespread import spreadFire
 
 def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
     GOAL = DIMENSIONS -1 
-
     agentDead = False
     startNode = Node(0,0)
     visited_fire_coordinates = {}           # Remembers where the fire has spread to
 
     while not agentDead:                    
         pathCoordinates = []                                        # Stores the path that BFS has found
-        bfsResult = BFSS2(fireMaze, startNode, DIMENSIONS)          # Call BFS
+        bfsResult = BFS(fireMaze, startNode, DIMENSIONS)          # Call BFS
 
         if (bfsResult is not None):                                 # If A Path Was Found
             print("BFS Path Found. Now checking Agent Status vs Fire...")
@@ -72,36 +72,3 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
             agentDead = True
 
         showMaze(fireMaze,DIMENSIONS)
-
-# Function to create the BFS Path
-def BFSS2(maze, startNode, dim):
-    fringe = Queue()
-    fringe.put(startNode)
-    visitedCoords = set()
-
-    leftRight = [1, 0, 0, -1]
-    upDown = [0, 1, -1, 0]
-
-    while(not fringe.empty()):
-        curr = fringe.get()
-
-        if(curr.x == (dim-1) and curr.y == (dim-1)):  # Goal Node Found
-            return curr
-
-        elif((curr.x, curr.y) not in visitedCoords):  # Process New Node's Neighbors
-            
-            for i in range(4):
-                row = curr.x + upDown[i]
-                col = curr.y + leftRight[i]
-
-                # Add valid child to fringe
-                if (0 <= row < dim and 0 <= col < dim            # in matrix
-                        and (maze[row][col] in [1,2,4])           # status = open/goal
-                        and ((row, col) not in visitedCoords)):  # not visited
-                    fringe.put(Node(row, col, curr))
-
-            visitedCoords.add((curr.x, curr.y))                  # mark current node as visited
-
-    # Else: Goal Node not found, fringe empty
-    return None
- 

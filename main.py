@@ -38,9 +38,9 @@ def firstSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
 def secondSection(MAZE, DIMENSIONS):
     # fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
     # showMaze(fireMaze, DIMENSIONS)
-    PROBABILITY_OF_FIRE_SPREAD = 0.9
+    PROBABILITY_OF_FIRE_SPREAD = 0.2
     fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],   # For consistent testing
-                [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
+                [2, 2, 2, 2, 2, 3, 2, 2, 3, 2],
                 [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
                 [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
                 [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
@@ -48,9 +48,10 @@ def secondSection(MAZE, DIMENSIONS):
                 [3, 3, 2, 3, 2, 3, 3, 2, 3, 2],
                 [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
                 [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
-                [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
-    # initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
-    initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+                [5, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
+
+    initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+    # initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
 
 main()
 
@@ -67,9 +68,9 @@ main()
 #             [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
 
 # This matrix for BFSS2 shows that the agent will pick an alternate path
-# Without the 5 in [1,7], the agent will travel along the edge of the matrix
+# Without the 5 in [1,7], the agent will travel along the edge of the matrix 
 # However once the fire blocks the path, the agent will choose an alternate path to adapt
-# fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],   # For consistent testing
+# fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],  
 #             [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
 #             [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
 #             [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
