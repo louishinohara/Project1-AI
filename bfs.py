@@ -1,6 +1,7 @@
 import time
 from node import Node
 from queue import Queue
+from maze import showMaze
 
 def initBFS(maze,dimensions):
     start_time = time.time() 
