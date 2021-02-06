@@ -38,7 +38,7 @@ def firstSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
 def secondSection(MAZE, DIMENSIONS):
     # fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
     # showMaze(fireMaze, DIMENSIONS)
-    PROBABILITY_OF_FIRE_SPREAD = 0.3
+    PROBABILITY_OF_FIRE_SPREAD = 0.9
     fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],   # For consistent testing
                 [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
                 [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
