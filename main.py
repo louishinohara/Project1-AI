@@ -10,6 +10,7 @@ from dfs import initDFS
 from bfs import initBFS
 from bfsS1 import initBFSS1  # BFS for Strategy 1
 from bfsS2 import initBFSS2  # BFS for Strategy 2
+from bfsS3 import initBFSS3  # BFS for Strategy 3
 
 def main():
     DIMENSIONS = 10
@@ -50,8 +51,10 @@ def secondSection(MAZE, DIMENSIONS):
                 [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
                 [5, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
 
-    initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+    # initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
     # initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+    initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+
 
 main()
 
