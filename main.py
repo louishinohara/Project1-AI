@@ -55,10 +55,10 @@ def secondSection(MAZE, DIMENSIONS):
                 [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1]]
 
     # Agent doesn't modify path and dies
-    # initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
+    initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
     
     # Agent only predicts one step ahead. Therefore will follow path and die. However if the flame peaks ahead, it will dodge it (Need to test repeatedly because it depends on probability of fire spread)
-    # initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+    initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
     
     initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
 
