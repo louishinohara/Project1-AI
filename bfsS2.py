@@ -12,7 +12,7 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
     agentDead = False
     startNode = Node(0,0)
     visited_fire_coordinates = {}           # Remembers where the fire has spread to
-
+    counter = 0
     while not agentDead:                    
         pathCoordinates = []                                        # Stores the path that BFS has found
         bfsResult = BFS(fireMaze, startNode, DIMENSIONS)          # Call BFS
@@ -63,12 +63,12 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
                     else:
                         fireMaze[fx][fy] = 5        # Otherwise spot is now on fire
                         print('Coordinate Added')
-
+      
             else:   # If fire didn't spread
                 print('[]')                         
-
+            counter += 1
         else:   # New fire path results in no possible path to goal
             print('Could not find path where agent survives due to new fire path')
             agentDead = True
-
+    print(counter)
     showMaze(fireMaze,DIMENSIONS)

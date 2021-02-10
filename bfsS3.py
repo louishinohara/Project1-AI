@@ -11,7 +11,7 @@ from firespread import spreadFire
 def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
     ### CHANGE THIS TO SEE THE PREDICTIONS
     SHOW_VISUALIZATION = False
-    RANGE_OF_ITERATIONS_TO_PREDICT = 3          # NEED TO CREATE A FUNCTION TO FIND A GOOD RANGE
+    RANGE_OF_ITERATIONS_TO_PREDICT = 7          # NEED TO CREATE A FUNCTION TO FIND A GOOD RANGE
     
     ### CONSTANTS
     GOAL = DIMENSIONS -1 
@@ -37,7 +37,7 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
                     predicted_fire_maze[fx][fy] = 6 if SHOW_VISUALIZATION else 5    # 6 Shows us where the fire spread too for visualization
                 predicted_fire_maze_list.append(copy.deepcopy(predicted_fire_maze))   # Add Predicted fire maze to list
 
-        print('Maze With Predicted Fire Path')
+        # print('Maze With Predicted Fire Path')
         showMaze(predicted_fire_maze, DIMENSIONS) if SHOW_VISUALIZATION else None
 
 
@@ -55,7 +55,7 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
                 break
             else:                       # If there is no path, try one prediction prior 
                 del predicted_fire_maze_list[-1]
-                print('Trying again')
+                # print('Trying again')
                 mazes -= 1
         
         # Update Maze With Current Fire Location (Not The Prediction But Actual)
@@ -112,7 +112,7 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
         else:   # New fire path results in no possible path to goal
             print('Could not find path where agent survives due to new fire path')
             agentDead = True
-        print("Current Maze")
+        # print("Current Maze")
     showMaze(fireMaze, DIMENSIONS)
 
 #### NOTE: IN BFS NEED TO MAKE THE AGENT PASS THROUGH A PREDICTED FIRE SPACE IF THAT IS THE ONLY OPTION AVAILABLE

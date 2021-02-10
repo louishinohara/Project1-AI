@@ -14,7 +14,7 @@ from bfsS3 import initBFSS3  # BFS for Strategy 3
 
 
 def main():
-    DIMENSIONS = 12
+    DIMENSIONS = 40
     PROBABILITY_OF_BLOCK = 0.3
     MAZE = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK)  # Create the maze
 
@@ -38,29 +38,30 @@ def firstSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
 
 
 def secondSection(MAZE, DIMENSIONS):
-    # fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
-    # showMaze(fireMaze, DIMENSIONS)
+    fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
+    print(fireMaze)
+    showMaze(fireMaze, DIMENSIONS)
     PROBABILITY_OF_FIRE_SPREAD = 0.3
-    fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],   # For consistent testing
-                [2, 2, 2, 2, 2, 3, 2, 5, 3, 2, 2, 2],
-                [2, 2, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2],
-                [3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-                [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-                [2, 2, 3, 2, 2, 3, 2, 2, 2, 2, 2, 2],
-                [3, 3, 2, 2, 2, 3, 3, 2, 3, 2, 2, 2],
-                [2, 3, 3, 2, 3, 2, 2, 2, 2, 2, 2, 2],
-                [2, 3, 2, 2, 3, 2, 3, 3, 2, 2, 2, 2],
-                [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-                [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-                [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1]]
+    # fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],   # For consistent testing
+    #             [2, 2, 2, 2, 2, 3, 2, 5, 3, 2, 2, 2],
+    #             [2, 2, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2],
+    #             [3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    #             [2, 2, 3, 2, 2, 3, 2, 2, 2, 2, 2, 2],
+    #             [3, 3, 2, 2, 2, 3, 3, 2, 3, 2, 2, 2],
+    #             [2, 3, 3, 2, 3, 2, 2, 2, 2, 2, 2, 2],
+    #             [2, 3, 2, 2, 3, 2, 3, 3, 2, 2, 2, 2],
+    #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1]]
 
     # Agent doesn't modify path and dies
-    # bfs1Maze = copy.deepcopy(fireMaze)
-    # initBFSS1(bfs1Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
+    bfs1Maze = copy.deepcopy(fireMaze)
+    initBFSS1(bfs1Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
     
     # Agent only predicts one step ahead. Therefore will follow path and die. However if the flame peaks ahead, it will dodge it (Need to test repeatedly because it depends on probability of fire spread)
-    # bfs2Maze = copy.deepcopy(fireMaze)
-    # initBFSS2(bfs2Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+    bfs2Maze = copy.deepcopy(fireMaze)
+    initBFSS2(bfs2Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
     
     bfs3Maze = copy.deepcopy(fireMaze)
     initBFSS3(bfs3Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
