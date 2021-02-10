@@ -1,5 +1,6 @@
 import time
 import copy
+import random
 from node import Node
 from queue import Queue
 from maze import showMaze
@@ -9,7 +10,7 @@ from firespread import spreadFire
 
 def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
     GOAL = DIMENSIONS -1 
-    RANGE_OF_ITERATIONS_TO_PREDICT = 3
+    RANGE_OF_ITERATIONS_TO_PREDICT = 2
     agentDead = False
     startNode = Node(0,0)
     visited_fire_coordinates = {}           # Remembers where the fire has spread to
@@ -19,14 +20,11 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
 
     while not agentDead:   
         
-        #### NOTE: NEED TO ACCOUNT FOR EDGE CASE THAT PREDICTION LEADS TO NO PATH EVEN THO THAT SPOT IS NOT ON FIRE YET BECAUSE IT IS PREDICTION
-        #### NOTE: HOWEVER ACCORIDNG TO THE CURRENT ALGORITHM, THAT SPACE WILL 'BE ON FIRE' SO IT WON'T TAKE THAT ROUTE
-
         ##### CREATE A NEW FIRE MAZE WHICH IS RANGE_OF_ITERATIONS_TO_PREDICT STEPS AHEAD OF THE CURRENT MAZE ####
         ##### NOTE: WE PREDICT THE PATH BY SETTING PROBABILITY_OF_PREDICTED_FIRE_SPREAD SPREAD TO 1 WHICH GAURANTEES THAT IT WILL SPREAD IN THAT DIRECTION
         for z in range(RANGE_OF_ITERATIONS_TO_PREDICT):  # This loop could give us the maze which is x steps ahead
             PROBABILITY_OF_PREDICTED_FIRE_SPREAD = 1  # Want to maximize possibility that the fire is spreading
-            predicted_fire_maze, predictedFireCoordinates = spreadFire(predicted_fire_maze, DIMENSIONS, PROBABILITY_OF_PREDICTED_FIRE_SPREAD) 
+            predicted_fire_maze, predictedFireCoordinates = spreadFireS3(predicted_fire_maze, DIMENSIONS, PROBABILITY_OF_PREDICTED_FIRE_SPREAD) 
             # Update Fire Location and Check if agent is still alive
             if len(predictedFireCoordinates) != 0:        # Update maze with where the fire has spreaded too
                 for fire in predictedFireCoordinates:    
@@ -39,9 +37,9 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
                     else:
                         predicted_visited_fire_coordinates[fx].append(fy)             # Add visited value
 
-                    predicted_fire_maze[fx][fy] = 5        # Otherwise spot is now on fire
-            print('Creating Fire Maze with Predicted Values')
-            showMaze(predicted_fire_maze, DIMENSIONS)
+                    predicted_fire_maze[fx][fy] = 6        # Otherwise spot is now on fire
+        print('Creating Fire Maze with Predicted Values')
+        showMaze(predicted_fire_maze, DIMENSIONS)
 
 
         print('BFS Search with predicted fire maze')
@@ -108,16 +106,17 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
 
         showMaze(fireMaze, DIMENSIONS)
 
-
-# Have our BFS Algorithm which takes in the fire maze -> Returns path to goal
-# New param into our BFS algorithm is the fire maze but 2 - 3 steps ahead. 
-# Or just assume that 3 spaces around each area on fire is already burning
-
-
+#### NOTE: IN BFS NEED TO MAKE THE AGENT PASS THROUGH A PREDICTED FIRE SPACE IF THAT IS THE ONLY OPTION AVAILABLE
+# THIS BFS HAS A PREFERENCE TO WHICH NODES IT CHOOSES TO MOVE TO
 def BFS(maze, startNode, dim):
     fringe = Queue()
     fringe.put(startNode)
     visitedCoords = set()
+    GOAL = 1
+    OPEN_SPACE = 2
+    AGENT_PATH = 4
+    PREDICTED_FIRE_SPACE = 6
+
 
     leftRight = [1, 0, 0, -1]
     upDown = [0, 1, -1, 0]
@@ -135,10 +134,55 @@ def BFS(maze, startNode, dim):
                 col = curr.y + leftRight[i]
 
                 # Add valid child to fringe
-                if (0 <= row < dim and 0 <= col < dim and (maze[row][col] in (1, 2, 4)) and ((row, col) not in visitedCoords)):  # in matrix # status = open/goal # not visited
-                    fringe.put(Node(row, col, curr))
+                if (0 <= row < dim and 0 <= col < dim and (maze[row][col] in (GOAL, OPEN_SPACE, AGENT_PATH)) and ((row, col) not in visitedCoords)):  # in matrix # status = open/goal # not visited
+                    
+                    if maze[row][col] in (GOAL, OPEN_SPACE): # Prefer nodes that are goal -> open -> current path -> predicted fire path, 
+                        fringe.put(Node(row, col, curr))
+                    elif maze[row][col] == AGENT_PATH:
+                        fringe.put(Node(row, col, curr))
+
+                # elif  (0 <= row < dim and 0 <= col < dim and (maze[row][col] == PREDICTED_FIRE_SPACE) and ((row, col) not in visitedCoords)):           # If their is no other path except the predicted fire path
+                #     fringe.put(Node(row, col, curr))
+
+
 
             visitedCoords.add((curr.x, curr.y))                  # mark current node as visited
 
     # Else: Goal Node not found, fringe empty
     return None
+
+
+def spreadFireS3(maze, dimensions, q):    # Params are the maze (and updated fire maze from last iteration), dimensions, probability of fire spread
+    mazeCopy = copy.deepcopy(maze)      # Need to make copy so current iteration results don't affect results of current iterations' coordinates that appear later 
+    FREE_SPACE = 2
+    BLOCKED_SPACE = 3
+    FIRE_SPACE = 5
+    PREDICTED_FIRE_SPACE = 6
+    fire_coordinate = []            # Coordinates of where the fire spread to this iteration
+    for x in range(dimensions):     # Mapping through entire matrix for coord on fire
+        for y in range(dimensions):
+
+            coordinate = maze[x][y] 
+            
+            if (coordinate == FREE_SPACE and coordinate != BLOCKED_SPACE and coordinate != FIRE_SPACE): # Only applies for free spaces, unblock spaces, and non fire spaces
+
+                #for each cell, check how many neighbors on fire
+                neighbors_on_fire = 0
+                leftRight = [1, 0, 0, -1]
+                upDown = [0, 1, -1, 0]
+
+                for i in range(4):
+                    row = x + upDown[i]
+                    col = y + leftRight[i]
+
+                    if (0 <= row < dimensions and 0 <= col < dimensions and (maze[row][col] == FIRE_SPACE or maze[row][col] == PREDICTED_FIRE_SPACE)): # in Matrix and status = on fire or predicted fire space
+                        neighbors_on_fire += 1
+
+                prob = 1 - ((1 - q) ** neighbors_on_fire)   # Probability that this coord will catch on fire
+
+                if (random.random() <= prob):               # Execute probability
+                    mazeCopy[x][y] = FIRE_SPACE
+                    fire_coordinate.append([x,y]) 
+    return mazeCopy, fire_coordinate 
+
+
