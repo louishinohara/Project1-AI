@@ -35,7 +35,6 @@ def initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
         for j in range(0,len(fireCoordinates)):   # Iterate through fire spread coordinates to see if there is intersection with agent
             if agentDead:      
                 print('Agent Died')
-                showMaze(fireMaze, DIMENSIONS)
                 break
 
             agent_x_pos = pathCoordinates[j][0]
@@ -66,7 +65,7 @@ def initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
             else:
                 print('[]')     # Fire did not spready this iteration
             
-            showMaze(fireMaze,DIMENSIONS)
+        showMaze(fireMaze,DIMENSIONS)
 
         if not agentDead:
             print('Agent Has Succesffuly Made It Out Of Maze')

@@ -20,9 +20,10 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
     visited_fire_coordinates = {}               # Remembers where the fire has spread to
     
     predicted_fire_maze = copy.deepcopy(fireMaze)  
+    
 
     while not agentDead:   
-        
+        predicted_fire_maze_list = [];
         ##### CREATES A NEW FIRE MAZE WHICH IS RANGE_OF_ITERATIONS_TO_PREDICT STEPS AHEAD OF THE CURRENT MAZE ####
         ##### NOTE: WE PREDICT THE PATH BY SETTING PROBABILITY_OF_PREDICTED_FIRE_SPREAD SPREAD TO 1 WHICH GAURANTEES THAT IT WILL SPREAD IN THAT DIRECTION
         for z in range(RANGE_OF_ITERATIONS_TO_PREDICT): 
@@ -34,18 +35,32 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
                     fx = fire[0]
                     fy = fire[1]
                     predicted_fire_maze[fx][fy] = 6 if SHOW_VISUALIZATION else 5    # 6 Shows us where the fire spread too for visualization
+                predicted_fire_maze_list.append(copy.deepcopy(predicted_fire_maze))   # Add Predicted fire maze to list
 
         print('Maze With Predicted Fire Path')
         showMaze(predicted_fire_maze, DIMENSIONS) if SHOW_VISUALIZATION else None
 
 
-        print('Run BFS on Maze With Predicted Fire Path')
+        # print('Run BFS on Maze With Predicted Fire Path')
         pathCoordinates = []                                            # Stores the path that BFS has found
-        bfsResult = BFS(predicted_fire_maze, startNode, DIMENSIONS)   
-                    
+        
+        #### THIS PART IS BUGGY BUT ALLOWS FOR OVERRIDE AND TRAVEL TO AREAS WHERE WE PREDICTED THE FIRE WOULD BE ###
+        # If the last prediction yields no results, try the maze prior to that
+        tryAlternate = True
+        mazes = len(predicted_fire_maze_list)
+        while tryAlternate and len(predicted_fire_maze_list) != 0:
+            bfsResult = BFS(predicted_fire_maze_list[mazes-1], startNode, DIMENSIONS)       # Get path with most recent fire prediction
+            
+            if bfsResult is not None:   # If we get a path, great                           
+                break
+            else:                       # If there is no path, try one prediction prior 
+                del predicted_fire_maze_list[-1]
+                print('Trying again')
+                mazes -= 1
+        
         # Update Maze With Current Fire Location (Not The Prediction But Actual)
         if (bfsResult is not None):                                 # If A Path Was Found
-            print("BFS Path Found. Now checking Agent Status vs Fire...")
+            # print("BFS Path Found. Now checking Agent Status vs Fire...")
 
             while(bfsResult is not None):                           # Store Coordinates For Path Found
                 pathCoordinates.append([bfsResult.x,bfsResult.y])
@@ -97,7 +112,7 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
         else:   # New fire path results in no possible path to goal
             print('Could not find path where agent survives due to new fire path')
             agentDead = True
-
+        print("Current Maze")
     showMaze(fireMaze, DIMENSIONS)
 
 #### NOTE: IN BFS NEED TO MAKE THE AGENT PASS THROUGH A PREDICTED FIRE SPACE IF THAT IS THE ONLY OPTION AVAILABLE
@@ -134,6 +149,8 @@ def BFS(maze, startNode, dim):
                         fringe.put(Node(row, col, curr))
                     elif maze[row][col] == AGENT_PATH:
                         fringe.put(Node(row, col, curr))
+                    # elif maze[row][col] == PREDICTED_FIRE_SPACE:
+                    #     fringe.put(Node(row, col, curr))
 
                 # elif  (0 <= row < dim and 0 <= col < dim and (maze[row][col] == PREDICTED_FIRE_SPACE) and ((row, col) not in visitedCoords)):           # If their is no other path except the predicted fire path
                 #     fringe.put(Node(row, col, curr))

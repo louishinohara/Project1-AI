@@ -71,4 +71,4 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
             print('Could not find path where agent survives due to new fire path')
             agentDead = True
 
-        showMaze(fireMaze,DIMENSIONS)
+    showMaze(fireMaze,DIMENSIONS)
