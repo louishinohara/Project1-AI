@@ -1,3 +1,4 @@
+import math
 # Node: used for search algorithm
 class Node():
     def __init__(self, x: int, y: int, prev=None):
@@ -12,4 +13,4 @@ class aStarNode(Node):
         #   Used for heuristics
         self.g = g                              # g = current cost
         self.dim = dim                          # dim used for goal node
-        self.f = g + abs(self.x-(self.dim-1)) + abs(self.y-(self.dim-1))  # h(n) is node's Manhattan distance to goal
+        self.f = g + math.sqrt( (self.x-(self.dim-1))**2 ) + math.sqrt( (self.y-(self.dim-1))**2 )  # h(n) is node's Euclidean distance to goal
