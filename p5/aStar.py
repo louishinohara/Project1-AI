@@ -5,9 +5,9 @@ def initAStar(maze,dimensions):
     aStarResult = aStar(maze, Node(0,0), dimensions)
     if (aStarResult is not None):
         print("--A* Goal Path--")
-        while(aStarResult is not None):
-            print('(' + str(aStarResult.x) + ', ' + str(aStarResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
-            aStarResult = aStarResult.prev
+        # while(aStarResult is not None):
+        #     print('(' + str(aStarResult.x) + ', ' + str(aStarResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
+        #     aStarResult = aStarResult.prev
         return True
     else:
         print("A* found no solution")
