@@ -1,6 +1,7 @@
 import os
 import matplotlib.pyplot as plt
 import copy
+import numpy as np
 from maze import createMaze, showMaze, updateMaze
 from customTimer import customTimer
 from firespread import igniteFire, spreadFire
@@ -39,9 +40,8 @@ def firstSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
 
 def secondSection(MAZE, DIMENSIONS):
     fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
-    print(fireMaze)
     showMaze(fireMaze, DIMENSIONS)
-    PROBABILITY_OF_FIRE_SPREAD = 0.3
+    PROBABILITY_OF_FIRE_SPREAD = 0
     # fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],   # For consistent testing
     #             [2, 2, 2, 2, 2, 3, 2, 5, 3, 2, 2, 2],
     #             [2, 2, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2],
@@ -54,6 +54,10 @@ def secondSection(MAZE, DIMENSIONS):
     #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1]]
+
+    # np.savetxt('arr.txt', fireMaze)       # USE THIS LINE TO SAVE THE ARRAY TO THE TEXT FILE
+
+    fireMaze = np.loadtxt('arr.txt')        # USE THIS LINE TO LOAD THE ARRAY FROM TEXT FILE
 
     # Agent doesn't modify path and dies
     bfs1Maze = copy.deepcopy(fireMaze)
