@@ -15,7 +15,7 @@ from bfsS3 import initBFSS3  # BFS for Strategy 3
 
 
 def main():
-    DIMENSIONS = 40
+    DIMENSIONS = 80
     PROBABILITY_OF_BLOCK = 0.3
     MAZE = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK)  # Create the maze
 
@@ -39,9 +39,7 @@ def firstSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
 
 
 def secondSection(MAZE, DIMENSIONS):
-    fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
-    showMaze(fireMaze, DIMENSIONS)
-    PROBABILITY_OF_FIRE_SPREAD = 0
+    PROBABILITY_OF_FIRE_SPREAD = 1
     # fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],   # For consistent testing
     #             [2, 2, 2, 2, 2, 3, 2, 5, 3, 2, 2, 2],
     #             [2, 2, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2],
@@ -55,21 +53,37 @@ def secondSection(MAZE, DIMENSIONS):
     #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
     #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1]]
 
-    # np.savetxt('arr.txt', fireMaze)       # USE THIS LINE TO SAVE THE ARRAY TO THE TEXT FILE
+    # for i in range(11):                 # Save maze 10 times. Mess with the fire location for each one
+    #     arr = "arr" + str(i) + '.txt'
+    #     fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
+    #     np.savetxt(arr, fireMaze)       # USE THIS LINE TO SAVE THE ARRAY TO THE TEXT FILE
+    #     # showMaze(fireMaze, DIMENSIONS)
 
-    fireMaze = np.loadtxt('arr.txt')        # USE THIS LINE TO LOAD THE ARRAY FROM TEXT FILE
 
-    # Agent doesn't modify path and dies
-    bfs1Maze = copy.deepcopy(fireMaze)
-    initBFSS1(bfs1Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
-    
-    # Agent only predicts one step ahead. Therefore will follow path and die. However if the flame peaks ahead, it will dodge it (Need to test repeatedly because it depends on probability of fire spread)
-    bfs2Maze = copy.deepcopy(fireMaze)
-    initBFSS2(bfs2Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
-    
-    bfs3Maze = copy.deepcopy(fireMaze)
-    initBFSS3(bfs3Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+    superResultList = []
+    for i in range(11):
+        arr = "arr" + str(i) + '.txt'
+        fireMaze = np.loadtxt(arr)        # USE THIS LINE TO LOAD THE ARRAY FROM TEXT FILE
+        # showMaze(fireMaze, DIMENSIONS)
+        resultList = []
+        for j in range(11):
+            PROBABILITY_OF_FIRE_SPREAD = j * 0.1
+            print('Maze#',i,'ProbFire',PROBABILITY_OF_FIRE_SPREAD)
+            # Agent doesn't modify path and dies
+            bfs1Maze = copy.deepcopy(fireMaze)
+            res1 = initBFSS1(bfs1Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
+            # Agent only predicts one step ahead. Therefore will follow path and die. However if the flame peaks ahead, it will dodge it (Need to test repeatedly because it depends on probability of fire spread)
+            bfs2Maze = copy.deepcopy(fireMaze)
+            res2 = initBFSS2(bfs2Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+            bfs3Maze = copy.deepcopy(fireMaze)
+            res3 = initBFSS3(bfs3Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
 
+            results = [res1,res2,res3]
+            print(results)
+            resultList.append(results)
+        superResultList.append(resultList)
+
+    print(superResultList)
 
 main()
 

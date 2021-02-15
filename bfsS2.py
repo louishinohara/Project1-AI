@@ -18,7 +18,7 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
         bfsResult = BFS(fireMaze, startNode, DIMENSIONS)          # Call BFS
 
         if (bfsResult is not None):                                 # If A Path Was Found
-            print("BFS Path Found. Now checking Agent Status vs Fire...")
+            # print("BFS Path Found. Now checking Agent Status vs Fire...")
 
             while(bfsResult is not None):                           # Store Coordinates For Path Found
                 pathCoordinates.append([bfsResult.x,bfsResult.y])
@@ -33,12 +33,13 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
             # Check if agent made it to goal
             if agent_x_pos == GOAL and agent_y_pos == GOAL:
                 print('Succesffully made it to goal')
+                return 1
                 break
 
             # Update agents' next position
             elif len(pathCoordinates) > 1:
                 startNode = Node(agent_x_pos, agent_y_pos)   
-                print('Set new start node as x: ' + str(agent_x_pos) + 'y: ' + str(agent_y_pos))
+                # print('Set new start node as x: ' + str(agent_x_pos) + 'y: ' + str(agent_y_pos))
     
             updatedFireMaze, newFireCoordinates = spreadFire(fireMaze, DIMENSIONS, PROBABILITY_OF_FIRE_SPREAD)    # Get fire maze matrix and coordinates that it spread to per iteration
 
@@ -62,7 +63,7 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
 
                     else:
                         fireMaze[fx][fy] = 5        # Otherwise spot is now on fire
-                        print('Coordinate Added')
+                        # print('Coordinate Added')
       
             else:   # If fire didn't spread
                 print('[]')                         
@@ -71,4 +72,4 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
             print('Could not find path where agent survives due to new fire path')
             agentDead = True
     print(counter)
-    showMaze(fireMaze,DIMENSIONS)
+    # showMaze(fireMaze,DIMENSIONS)

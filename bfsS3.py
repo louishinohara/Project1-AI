@@ -74,6 +74,7 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
             # Check if agent made it to goal
             if agent_x_pos == GOAL and agent_y_pos == GOAL:
                 print('Succesffully made it to goal')
+                return 1
                 break
 
             # Update agents' next position
@@ -113,7 +114,7 @@ def initBFSS3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
             print('Could not find path where agent survives due to new fire path')
             agentDead = True
         # print("Current Maze")
-    showMaze(fireMaze, DIMENSIONS)
+    # showMaze(fireMaze, DIMENSIONS)
 
 #### NOTE: IN BFS NEED TO MAKE THE AGENT PASS THROUGH A PREDICTED FIRE SPACE IF THAT IS THE ONLY OPTION AVAILABLE
 # THIS BFS HAS A PREFERENCE TO WHICH NODES IT CHOOSES TO MOVE TO
