@@ -42,17 +42,6 @@ def mazeWithStrategy(MAZE, DIMENSIONS):
     PROBABILITY_OF_FIRE_SPREAD = 0.3
     fireMaze = igniteFire(MAZE, DIMENSIONS)
 
-    # fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],
-    #         [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
-    #         [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
-    #         [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
-    #         [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-    #         [2, 2, 3, 2, 2, 3, 2, 2, 2, 2],
-    #         [3, 3, 2, 3, 2, 3, 3, 2, 3, 2],
-    #         [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
-    #         [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
-    #         [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
-
     # The three different strategies
     strat1Maze = copy.deepcopy(fireMaze)
     initStrat1(strat1Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
