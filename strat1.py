@@ -7,19 +7,19 @@ from maze import showMaze
 from firespread import spreadFire
 
 
-def initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
+def initStrat1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
     agentDead = False
     pathCoordinates = []
     fireCoordinates = []
     fireMazeCopy = copy.deepcopy(fireMaze)      # Want to save original maze
-    bfsResult = BFS(fireMaze, Node(0,0), DIMENSIONS)
+    result = BFS(fireMaze, Node(0,0), DIMENSIONS)
 
-    if (bfsResult is not None):                 # If path was succesfully found
+    if (result is not None):                 # If path was succesfully found
         print("BFS Path Found. Now checking Agent Status vs Fire...")
 
-        while(bfsResult is not None):           # Getting coordinates for path
-            pathCoordinates.append([bfsResult.x,bfsResult.y])
-            bfsResult = bfsResult.prev
+        while(result is not None):           # Getting coordinates for path
+            pathCoordinates.append([result.x,result.y])
+            result = result.prev
 
         # Reverse the coordinate path Goal -> Start is not Start -> Goal Path
         pathCoordinates = [ele for ele in reversed(pathCoordinates)]        
@@ -65,7 +65,7 @@ def initBFSS1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
             else:
                 print('[]')     # Fire did not spready this iteration
             
-        # showMaze(fireMaze,DIMENSIONS)
+        showMaze(fireMaze,DIMENSIONS)
 
         if not agentDead:
             print('Agent Has Succesffuly Made It Out Of Maze')

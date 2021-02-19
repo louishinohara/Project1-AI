@@ -13,7 +13,7 @@ def initDFS(maze,dimensions):
     if (dfsResult is not None):
         print("--DFS Goal Path--")
         dfsResultsCopy = dfsResult
-        # while(dfsResult is not None):
+        # while(dfsResult is not None):     # Prints path coordinates to solution
         #     print('(' + str(dfsResult.x) + ', ' + str(dfsResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
         #     dfsResult = dfsResult.prev
         return dfsResultsCopy        # Return Result of Coordinates

@@ -11,8 +11,8 @@ def initBFS(maze,dimensions):
     if (bfsResult is not None):
         print("--BFS Goal Path--")
         bfsResultsCopy = bfsResult
-        # while(bfsResult is not None):
-        #     print('(' + str(bfsResult.x) + ', ' + str(bfsResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
+        # while(bfsResult is not None):     # Prints coordinates to path
+        #     print('(' + str(bfsResult.x) + ', ' + str(bfsResult.y) + ') <- ', end='')  
         #     bfsResult = bfsResult.prev
         return bfsResultsCopy
     else:
@@ -38,27 +38,17 @@ def BFS(maze, startNode, dim):
 
         elif((curr.x, curr.y) not in visitedCoords):  # Process New Node's Neighbors
 
-            # # Printing Path (debugging)
-            # print("Processing coords: " + str(curr.x) + " " + str(curr.y))
-            # bfsResult = curr
-            # print('Processing Path: ', end='')
-            # while(bfsResult is not None):
-            #   print('(' + str(bfsResult.x) + ', ' + str(bfsResult.y) + ') <- ', end='')
-            #   bfsResult = bfsResult.prev
-            # print()
-
-            
             for i in range(4):
                 row = curr.x + upDown[i]
                 col = curr.y + leftRight[i]
 
                 # Add valid child to fringe
-                if (0 <= row < dim and 0 <= col < dim            # in matrix
-                        and (maze[row][col] in (1, 2, 4 ))           # status = open/goal
-                        and ((row, col) not in visitedCoords)):  # not visited
+                if (0 <= row < dim and 0 <= col < dim                   # in matrix
+                        and (maze[row][col] in (1, 2, 4 ))              # status = open/goal
+                        and ((row, col) not in visitedCoords)):         # not visited
                     fringe.put(Node(row, col, curr))
 
-            visitedCoords.add((curr.x, curr.y))                  # mark current node as visited
+            visitedCoords.add((curr.x, curr.y))                         # mark current node as visited
 
     # Else: Goal Node not found, fringe empty
     return None

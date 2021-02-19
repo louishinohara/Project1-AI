@@ -5,20 +5,22 @@ from node import Node
 from queue import Queue
 from maze import showMaze
 from firespread import spreadFire
+from dfs import DFS
+from aStar import aStar
 
-
-def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
+def initStrat2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
     GOAL = DIMENSIONS -1 
     agentDead = False
     startNode = Node(0,0)
     visited_fire_coordinates = {}           # Remembers where the fire has spread to
-    counter = 0
+
     while not agentDead:                    
         pathCoordinates = []                                        # Stores the path that BFS has found
-        bfsResult = BFS(fireMaze, startNode, DIMENSIONS)          # Call BFS
+        # bfsResult = BFS(fireMaze, startNode, DIMENSIONS)          # Call BFS
+        bfsResult = aStar(fireMaze, startNode, DIMENSIONS)          # Call BFS
 
         if (bfsResult is not None):                                 # If A Path Was Found
-            # print("BFS Path Found. Now checking Agent Status vs Fire...")
+            print("BFS Path Found. Now checking Agent Status vs Fire...")
 
             while(bfsResult is not None):                           # Store Coordinates For Path Found
                 pathCoordinates.append([bfsResult.x,bfsResult.y])
@@ -26,25 +28,22 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
 
             # Update agent's current position
             pathCoordinates = [ele for ele in reversed(pathCoordinates)]        # Reverse the coordinate path Goal -> Start is not Start -> Goal Path
-           #  print(pathCoordinates)
+
             agent_x_pos, agent_y_pos = pathCoordinates[1][0], pathCoordinates[1][1]
             fireMaze[agent_x_pos][agent_y_pos] = 4 
 
             # Check if agent made it to goal
             if agent_x_pos == GOAL and agent_y_pos == GOAL:
                 print('Succesffully made it to goal')
-                return 1
                 break
 
             # Update agents' next position
             elif len(pathCoordinates) > 1:
                 startNode = Node(agent_x_pos, agent_y_pos)   
-                # print('Set new start node as x: ' + str(agent_x_pos) + 'y: ' + str(agent_y_pos))
     
             updatedFireMaze, newFireCoordinates = spreadFire(fireMaze, DIMENSIONS, PROBABILITY_OF_FIRE_SPREAD)    # Get fire maze matrix and coordinates that it spread to per iteration
 
             # Update Fire Location and Check if agent is still alive
-            # print(newFireCoordinates)
             if len(newFireCoordinates) != 0:        # Update maze with where the fire has spreaded too
                 for fire in newFireCoordinates:    
                     fx = fire[0]
@@ -63,13 +62,11 @@ def initBFSS2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
 
                     else:
                         fireMaze[fx][fy] = 5        # Otherwise spot is now on fire
-                        # print('Coordinate Added')
       
             else:   # If fire didn't spread
                 print('[]')                         
-            counter += 1
+
         else:   # New fire path results in no possible path to goal
             print('Could not find path where agent survives due to new fire path')
             agentDead = True
-    print(counter)
-    # showMaze(fireMaze,DIMENSIONS)
+    showMaze(fireMaze,DIMENSIONS)

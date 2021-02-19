@@ -33,7 +33,7 @@ def createMaze(dim, fp):
 
 def showMaze(maze, dim):
     ## grid from array: https://stackoverflow.com/questions/43971138/python-plotting-colored-grid-based-on-values
-    
+
     # create discrete colormap 
     cmap = colors.ListedColormap(['green', 'white', 'black', 'blue', 'red', 'purple'])
     bounds = [0,1.9,2.9, 3.9, 4.9, 5.9, 6.9]   #[green = 0, green=1, white=2, black=3, blue=4, red=5, purple = 6] [start, goal, open, blocked, path, fire, predictedFire]

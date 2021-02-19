@@ -2,32 +2,31 @@ import os
 import matplotlib.pyplot as plt
 import copy
 import numpy as np
+
 from maze import createMaze, showMaze, updateMaze
-from customTimer import customTimer
 from firespread import igniteFire, spreadFire
 from node import Node, aStarNode
-
+from aStar import initAStar
 from dfs import initDFS
 from bfs import initBFS
-from bfsS1 import initBFSS1  # BFS for Strategy 1
-from bfsS2 import initBFSS2  # BFS for Strategy 2
-from bfsS3 import initBFSS3  # BFS for Strategy 3
-
+from strat1 import initStrat1  # Algorithm for Strategy 1
+from strat2 import initStrat2  # Algorithm for Strategy 2
+from strat3 import initStrat3  # Algorithm for Strategy 3
 
 def main():
-    DIMENSIONS = 80
+    DIMENSIONS = 10
     PROBABILITY_OF_BLOCK = 0.3
     MAZE = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK)  # Create the maze
 
-    # firstSection(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)
-    secondSection(MAZE, DIMENSIONS)
+    # mazeWithoutStrategy(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)           # Our BFS, DFS, A* Implementation
+    mazeWithStrategy(MAZE, DIMENSIONS)                                 # Our three strategies
 
 
-def firstSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
+def mazeWithoutStrategy(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
     # List of functions to store in array and execute in for loop on next line
     # Store as function to call with param as our maze and the dimensions of the maze
-    # DFS Maze Function, BFS Maze Function
-    funcList = [initDFS(MAZE, DIMENSIONS), initBFS(MAZE, DIMENSIONS)]
+    # DFS Maze Function, BFS Maze Function, Astar Maze Function
+    funcList = [initDFS(MAZE, DIMENSIONS), initBFS(MAZE, DIMENSIONS), initAStar(MAZE, DIMENSIONS)]
 
     for func in funcList:
         # Returns Completed Maze and if path is found
@@ -38,52 +37,32 @@ def firstSection(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
             break
 
 
-def secondSection(MAZE, DIMENSIONS):
-    PROBABILITY_OF_FIRE_SPREAD = 1
-    # fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],   # For consistent testing
-    #             [2, 2, 2, 2, 2, 3, 2, 5, 3, 2, 2, 2],
-    #             [2, 2, 2, 2, 2, 3, 2, 3, 2, 2, 2, 2],
-    #             [3, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-    #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-    #             [2, 2, 3, 2, 2, 3, 2, 2, 2, 2, 2, 2],
-    #             [3, 3, 2, 2, 2, 3, 3, 2, 3, 2, 2, 2],
-    #             [2, 3, 3, 2, 3, 2, 2, 2, 2, 2, 2, 2],
-    #             [2, 3, 2, 2, 3, 2, 3, 3, 2, 2, 2, 2],
-    #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-    #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-    #             [2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 2, 1]]
+def mazeWithStrategy(MAZE, DIMENSIONS):
+    PROBABILITY_OF_FIRE_SPREAD = 0.3
+    # fireMaze = igniteFire(MAZE, DIMENSIONS)
 
-    # for i in range(11):                 # Save maze 10 times. Mess with the fire location for each one
-    #     arr = "arr" + str(i) + '.txt'
-    #     fireMaze = igniteFire(MAZE, DIMENSIONS)                             # Gets a maze with ignited fire
-    #     np.savetxt(arr, fireMaze)       # USE THIS LINE TO SAVE THE ARRAY TO THE TEXT FILE
-    #     # showMaze(fireMaze, DIMENSIONS)
+    fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],
+            [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
+            [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
+            [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
+            [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+            [2, 2, 3, 2, 2, 3, 2, 2, 2, 2],
+            [3, 3, 2, 3, 2, 3, 3, 2, 3, 2],
+            [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
+            [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
+            [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
+
+    # The three different strategies
+    strat1Maze = copy.deepcopy(fireMaze)
+    initStrat1(strat1Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
+
+    strat2Maze = copy.deepcopy(fireMaze)
+    initStrat2(strat2Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
+
+    strat3Maze = copy.deepcopy(fireMaze)
+    initStrat3(strat3Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
 
 
-    superResultList = []
-    for i in range(11):
-        arr = "arr" + str(i) + '.txt'
-        fireMaze = np.loadtxt(arr)        # USE THIS LINE TO LOAD THE ARRAY FROM TEXT FILE
-        # showMaze(fireMaze, DIMENSIONS)
-        resultList = []
-        for j in range(11):
-            PROBABILITY_OF_FIRE_SPREAD = j * 0.1
-            print('Maze#',i,'ProbFire',PROBABILITY_OF_FIRE_SPREAD)
-            # Agent doesn't modify path and dies
-            bfs1Maze = copy.deepcopy(fireMaze)
-            res1 = initBFSS1(bfs1Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)     
-            # Agent only predicts one step ahead. Therefore will follow path and die. However if the flame peaks ahead, it will dodge it (Need to test repeatedly because it depends on probability of fire spread)
-            bfs2Maze = copy.deepcopy(fireMaze)
-            res2 = initBFSS2(bfs2Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
-            bfs3Maze = copy.deepcopy(fireMaze)
-            res3 = initBFSS3(bfs3Maze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS)
-
-            results = [res1,res2,res3]
-            print(results)
-            resultList.append(results)
-        superResultList.append(resultList)
-
-    print(superResultList)
 
 main()
 
@@ -99,10 +78,11 @@ main()
 #             [2, 3, 2, 2, 3, 2, 3, 3, 2, 3],
 #             [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
 
-# This matrix for BFSS2 shows that the agent will pick an alternate path
+# This matrix for strat2Maze which shows that the agent will pick an alternate path
 # Without the 5 in [1,7], the agent will travel along the edge of the matrix
 # However once the fire blocks the path, the agent will choose an alternate path to adapt
-# DIM = 10
+# DIM = 10  (Make sure to set dimensions to 10)
+
 # fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],
 #             [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
 #             [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
@@ -114,4 +94,4 @@ main()
 #             [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
 #             [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
 
-# TEST MATRIX FOR BFFSS3
+
