@@ -14,11 +14,12 @@ from strat2 import initStrat2  # Algorithm for Strategy 2
 from strat3 import initStrat3  # Algorithm for Strategy 3
 
 def main():
-    DIMENSIONS = 10
+    DIMENSIONS = 80
     PROBABILITY_OF_BLOCK = 0.3
     MAZE = createMaze(DIMENSIONS, PROBABILITY_OF_BLOCK)  # Create the maze
 
-    # mazeWithoutStrategy(MAZE, DIMENSIONS,PROBABILITY_OF_BLOCK)           # Our BFS, DFS, A* Implementation
+    MAZE_COPY = copy.deepcopy(MAZE)
+    mazeWithoutStrategy(MAZE_COPY, DIMENSIONS,PROBABILITY_OF_BLOCK)           # Our BFS, DFS, A* Implementation
     mazeWithStrategy(MAZE, DIMENSIONS)                                 # Our three strategies
 
 
@@ -39,18 +40,18 @@ def mazeWithoutStrategy(MAZE, DIMENSIONS, PROBABILITY_OF_BLOCK):
 
 def mazeWithStrategy(MAZE, DIMENSIONS):
     PROBABILITY_OF_FIRE_SPREAD = 0.3
-    # fireMaze = igniteFire(MAZE, DIMENSIONS)
+    fireMaze = igniteFire(MAZE, DIMENSIONS)
 
-    fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],
-            [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
-            [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
-            [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
-            [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
-            [2, 2, 3, 2, 2, 3, 2, 2, 2, 2],
-            [3, 3, 2, 3, 2, 3, 3, 2, 3, 2],
-            [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
-            [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
-            [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
+    # fireMaze = [[0, 2, 2, 2, 2, 2, 2, 2, 2, 2,],
+    #         [2, 2, 2, 2, 2, 3, 2, 5, 3, 2],
+    #         [2, 2, 2, 2, 2, 3, 2, 3, 2, 2],
+    #         [3, 2, 2, 2, 2, 2, 3, 2, 2, 2],
+    #         [2, 2, 2, 2, 2, 2, 2, 2, 2, 2],
+    #         [2, 2, 3, 2, 2, 3, 2, 2, 2, 2],
+    #         [3, 3, 2, 3, 2, 3, 3, 2, 3, 2],
+    #         [2, 3, 3, 2, 3, 2, 2, 2, 2, 2],
+    #         [2, 3, 2, 2, 3, 2, 3, 3, 2, 2],
+    #         [2, 2, 2, 2, 2, 3, 2, 2, 2, 1]]
 
     # The three different strategies
     strat1Maze = copy.deepcopy(fireMaze)

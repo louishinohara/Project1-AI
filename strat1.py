@@ -23,7 +23,7 @@ def initStrat1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
 
         # Reverse the coordinate path Goal -> Start is not Start -> Goal Path
         pathCoordinates = [ele for ele in reversed(pathCoordinates)]        
-        del pathCoordinates[0]                          # Want the first move to be the agent moving        -> ================== IF THERE IS A BUG BECAUSE OF A LENGTH ERROR IT IS PROBABLY THIS BUT IS WORKING FINE IN MY TESTS   =================
+        del pathCoordinates[0]                          # Want the first move to be the agent moving      
 
         for i in range(len(pathCoordinates)):           # Create Fire Spread and get the spots it spreads to for each iteration
             updatedFireMaze, newFireCoordinates = spreadFire(fireMazeCopy, DIMENSIONS, PROBABILITY_OF_FIRE_SPREAD)    # Get fire maze matrix and coordinates that it spread to per iteration

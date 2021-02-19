@@ -16,15 +16,15 @@ def initStrat2(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
 
     while not agentDead:                    
         pathCoordinates = []                                        # Stores the path that BFS has found
-        # bfsResult = BFS(fireMaze, startNode, DIMENSIONS)          # Call BFS
-        bfsResult = aStar(fireMaze, startNode, DIMENSIONS)          # Call BFS
+        # result = BFS(fireMaze, startNode, DIMENSIONS)          # Call BFS
+        result = aStar(fireMaze, startNode, DIMENSIONS)          # Call aStar
 
-        if (bfsResult is not None):                                 # If A Path Was Found
+        if (result is not None):                                 # If A Path Was Found
             print("BFS Path Found. Now checking Agent Status vs Fire...")
 
-            while(bfsResult is not None):                           # Store Coordinates For Path Found
-                pathCoordinates.append([bfsResult.x,bfsResult.y])
-                bfsResult = bfsResult.prev
+            while(result is not None):                           # Store Coordinates For Path Found
+                pathCoordinates.append([result.x,result.y])
+                result = result.prev
 
             # Update agent's current position
             pathCoordinates = [ele for ele in reversed(pathCoordinates)]        # Reverse the coordinate path Goal -> Start is not Start -> Goal Path
