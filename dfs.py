@@ -11,7 +11,7 @@ def initDFS(maze,dimensions):
     dfsResult = DFS(maze, Node(0,0), dimensions)
     print("--- %s seconds ---" % (time.time() - start_time))
     if (dfsResult is not None):
-        print("--DFS Goal Path--")
+        print("--DFS Goal Path Found--")
         dfsResultsCopy = dfsResult
         # while(dfsResult is not None):     # Prints path coordinates to solution
         #     print('(' + str(dfsResult.x) + ', ' + str(dfsResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
@@ -26,10 +26,8 @@ def DFS(maze, startNode, dim):
     fringe.append(startNode)
     visitedCoords = set()
 
-    # These arrays are used to get row and column
-    # numbers of 4 neighbours of a given cell
-    # (From GFG: https://www.geeksforgeeks.org/shortest-path-in-a-binary-maze/)
-    leftRight = [1, 0, 0, -1]
+    # Arrays for neighbor access (right, down, up, left)
+    rightLeft = [1, 0, 0, -1]
     upDown = [0, 1, -1, 0]
 
     while(len(fringe) != 0):
@@ -52,7 +50,7 @@ def DFS(maze, startNode, dim):
             
             for i in range(4):
                 row = curr.x + upDown[i]
-                col = curr.y + leftRight[i]
+                col = curr.y + rightLeft[i]
 
                 # Add valid child to fringe
                 if (0 <= row < dim and 0 <= col < dim            # in matrix

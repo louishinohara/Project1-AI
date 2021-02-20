@@ -56,7 +56,7 @@ def mazeWithStrategy(MAZE, DIMENSIONS):
 
 main()
 
-# Sample maze where agent gauranteed death
+# Sample maze where agent is guaranteed death
 # fireMaze = [[0, 2, 2, 3, 2, 2, 2, 3, 2, 2,],
 #             [2, 2, 2, 2, 2, 3, 2, 3, 2, 3],
 #             [2, 2, 2, 2, 2, 3, 2, 2, 2, 2],

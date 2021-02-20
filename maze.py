@@ -4,7 +4,7 @@ from matplotlib import colors
 import numpy as np
 
 
-#Returns true false based on probability blocked, true false indicating whether cell should be blocked or free
+# Returns T/F boolean based on input probability, T = Blocked, F = Free
 def blocked(fp):
 
     probabilityBlocked = False
@@ -31,8 +31,9 @@ def createMaze(dim, fp):
     maze[dim-1][dim-1] = 1
     return np.array(maze)
 
+# showMaze: Visualizes input array 'maze' using matplotlib
+
 def showMaze(maze, dim):
-    ## grid from array: https://stackoverflow.com/questions/43971138/python-plotting-colored-grid-based-on-values
 
     # create discrete colormap 
     cmap = colors.ListedColormap(['green', 'white', 'black', 'blue', 'red', 'purple'])

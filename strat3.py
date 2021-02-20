@@ -72,7 +72,7 @@ def initStrat3(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
 
             # Check if agent made it to goal
             if agent_x_pos == GOAL and agent_y_pos == GOAL:
-                print('Succesffully made it to goal')
+                print('Successfully made it to goal')
                 break
 
             # Update agents' next position

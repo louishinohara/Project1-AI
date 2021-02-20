@@ -68,7 +68,7 @@ def initStrat1(fireMaze, PROBABILITY_OF_FIRE_SPREAD, DIMENSIONS):
         showMaze(fireMaze,DIMENSIONS)
 
         if not agentDead:
-            print('Agent Has Succesffuly Made It Out Of Maze')
+            print('Agent Has Successfully Made It Out Of Maze')
             return 1
     else:
       print("BFS found no solution")

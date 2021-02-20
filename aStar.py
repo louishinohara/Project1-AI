@@ -4,7 +4,7 @@ from queue import PriorityQueue
 def initAStar(maze,dimensions):
     aStarResult = aStar(maze, Node(0,0), dimensions)
     if (aStarResult is not None):
-        print("--A* Goal Path--")
+        print("--A* Goal Path Found--")
         astarResultCopy = aStarResult
         # while(aStarResult is not None):   # Prints the results for the nodes in the maze.
         #     print('(' + str(aStarResult.x) + ', ' + str(aStarResult.y) + ') <- ', end='')   # why does this print only after exiting matplotlib?
@@ -27,10 +27,8 @@ def aStar(maze, startNode, dim):
     fringe.put((aStar_start.f, qNum, aStar_start))     # startNode priority = distance from start to goal
     qNum = qNum + 1
     
-    # These arrays are used to get row and column
-    # numbers of 4 neighbours of a given cell
-    # (From GFG: https://www.geeksforgeeks.org/shortest-path-in-a-binary-maze/)
-    leftRight = [1, 0, 0, -1]
+    # Arrays for neighbor access (right, down, up, left)
+    rightLeft = [1, 0, 0, -1]
     upDown = [0, 1, -1, 0]
 
     while(not fringe.empty()):
@@ -43,7 +41,7 @@ def aStar(maze, startNode, dim):
             
             for i in range(4):
                 row = curr.x + upDown[i]
-                col = curr.y + leftRight[i]
+                col = curr.y + rightLeft[i]
 
                 # Add valid child to fringe
                 if (0 <= row < dim and 0 <= col < dim            # in matrix
